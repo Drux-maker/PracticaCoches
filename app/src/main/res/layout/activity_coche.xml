@@ -17,45 +17,41 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/back_arrow"
-            android:contentDescription="Botón Volver"
-            android:background="?attr/selectableItemBackgroundBorderless"/>
+            android:contentDescription="Botón Volver"/>
 
         <ImageButton
             android:id="@+id/btnDollar"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/ic_dollar"
-            android:contentDescription="Botón Dólar"
-            android:background="?attr/selectableItemBackgroundBorderless"/>
+            android:contentDescription="Botón Dólar"/>
 
         <TextView
             android:id="@+id/tvMarca"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
             android:layout_weight="1"
+            android:gravity="center"
             android:text=""
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:gravity="center"/>
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
         <ImageButton
             android:id="@+id/btnSettings"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/ic_configuracion"
-            android:contentDescription="Botón Configuración"
-            android:background="?attr/selectableItemBackgroundBorderless"/>
+            android:contentDescription="Botón Configuración"/>
 
         <ImageButton
             android:id="@+id/btnUpgrade"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/ic_mejora"
-            android:contentDescription="Botón Mejora"
-            android:background="?attr/selectableItemBackgroundBorderless"/>
+            android:contentDescription="Botón Mejora"/>
     </LinearLayout>
 
-    <!-- Contenido principal -->
+    <!-- Imagen coche -->
     <ImageView
         android:id="@+id/imgCoche"
         android:layout_width="match_parent"

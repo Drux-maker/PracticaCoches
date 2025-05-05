@@ -28,10 +28,10 @@ public class CocheActivity extends AppCompatActivity {
 
         // Recibir datos de MainActivity
         Intent intent = getIntent();
-        if (intent != null && intent.hasExtra("num_i")) {
+        if (intent != null) {
             //Recibo que marca es Luego lo usare para filtrar la imagenes de los coches disponibles
             String marca = intent.getStringExtra("marca");
-            //De alguna froma se eligira el coche principal y este se pondra siempre al inicio del array
+            //De alguna froma se pondra el coche usado anteriormente
             tvMarca.setText(marca);
             imgCoche.setImageResource(imagenes[0]);
         }
@@ -43,7 +43,10 @@ public class CocheActivity extends AppCompatActivity {
 
         btnDollar.setOnClickListener(v -> {
             Toast.makeText(this, "Compra de vehiculos", Toast.LENGTH_SHORT).show();
-            // Lógica
+
+            Intent intentCompra = new Intent(CocheActivity.this, CompraActivity.class);
+
+            startActivity(intentCompra);
         });
 
         btnSettings.setOnClickListener(v -> {
