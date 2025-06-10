@@ -2,10 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="@color/luxuryBlack"
     android:padding="16dp"
-    android:background="@color/luxuryBlack">
+    android:gravity="center_horizontal">
 
     <!-- Barra superior con las categorías (TabLayout) -->
     <com.google.android.material.tabs.TabLayout
@@ -17,16 +19,26 @@
         android:background="@color/luxuryBlack"
         app:tabIndicatorColor="@color/luxuryGold"/>
 
-    <!-- Dinero disponible -->
+    <!-- Título -->
     <TextView
-        android:id="@+id/tvDinero"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Dinero: 5000€"
-        android:textSize="20sp"
+        android:text="Selecciona Piezas"
+        android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="@color/luxuryGold"
         android:gravity="center"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Dinero -->
+    <TextView
+        android:id="@+id/tvDinero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dinero: 5000€"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/luxuryWhite"
         android:layout_marginBottom="12dp" />
 
     <!-- Lista de piezas -->
@@ -36,21 +48,22 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:clipToPadding="false"
-        android:padding="4dp"
+        android:padding="8dp"
+        android:background="@color/luxuryGray"
         android:scrollbars="vertical"
-        android:background="@color/luxuryGray" />
+        tools:listitem="@layout/item_pieza" />
 
-    <!-- Botón para guardar -->
+    <!-- Botón guardar -->
     <Button
         android:id="@+id/btnGuardar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Guardar selección"
         android:textAllCaps="false"
-        android:textColor="@color/luxuryWhite"
+        android:textStyle="bold"
+        android:textColor="@color/luxuryBlack"
         android:backgroundTint="@color/luxuryGold"
-        android:textSize="16sp"
         android:layout_marginTop="16dp"
-        android:padding="14dp"
-        android:background="@drawable/button_gold_ripple" />
+        android:padding="12dp"
+        style="@style/Widget.MaterialComponents.Button" />
 </LinearLayout>

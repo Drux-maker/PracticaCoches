@@ -1,19 +1,28 @@
 package com.example.practicacoches;
 
-public class Coche {
-    private String modelo;
-    private String descripcion;
-    private int imagenResId;
+import java.io.Serializable;
 
-    public Coche(String modelo, String descripcion, int imagenResId) {
-        this.modelo = modelo;
-        this.descripcion = descripcion;
-        this.imagenResId = imagenResId;
+public class Coche implements Serializable {
+    private String marca;
+    private String nombre;
+    private String imagen;
+
+    public Coche(String nombre, String imagen, String marca) {
+        this.nombre = nombre;
+        this.imagen = imagen;
+        this.marca = marca;
     }
 
-    // Getters
-    public String getModelo() { return modelo; }
+    public String getMarca() {
+        return marca;
+    }
 
-    public String getDescripcion() { return descripcion; }
-    public int getImagenResId() { return imagenResId; }
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
 }
+

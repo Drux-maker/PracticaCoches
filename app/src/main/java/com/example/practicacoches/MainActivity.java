@@ -5,55 +5,85 @@ import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private ImageView imageView;
-    private ImageButton btnPrevious, btnNext;
-    private final int[] imagenes = {R.drawable.vw, R.drawable.bmw, R.drawable.audi};
-    private int currentIndex = 0;
+
+    private ImageView imageMarca;
+    private ImageButton btnAnterior, btnSiguiente;
+    private List<Marca> listaMarcas = new ArrayList<>();
+    private int indiceActual = 0;
+    private MainViewModel mvm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        imageView = findViewById(R.id.imageView);
-        btnPrevious = findViewById(R.id.btn_back);
-        btnNext = findViewById(R.id.btn_forward);
+        imageMarca = findViewById(R.id.imageView);
+        btnAnterior = findViewById(R.id.btn_back);
+        btnSiguiente = findViewById(R.id.btn_forward);
 
-        imageView.setOnClickListener(v -> {
-            String marca = getResources().getResourceEntryName(imagenes[currentIndex]);
+        mvm = new ViewModelProvider(this).get(MainViewModel.class);
 
-            Intent intent = new Intent(MainActivity.this, CocheActivity.class);
-            //Aqui paso los datos que necesite
-            intent.putExtra("marca", marca);
+        if (savedInstanceState != null) {
+            indiceActual = savedInstanceState.getInt("indice_actual", 0);
+        }
 
-            startActivity(intent);
-        });
-
-        updateImage();
-
-        btnPrevious.setOnClickListener(v -> {
-            if (currentIndex > 0) {
-                currentIndex--;
-                updateImage();
+        mvm.getMarcas().observe(this, marcas -> {
+            if (marcas != null && !marcas.isEmpty()) {
+                listaMarcas = marcas;
+                mostrarMarca(indiceActual);
             }
         });
 
-        btnNext.setOnClickListener(v -> {
-            if (currentIndex < imagenes.length - 1) {
-                currentIndex++;
-                updateImage();
+        if (mvm.getMarcas().getValue() == null) {
+            mvm.cargarMarcas(this);
+        }
+
+        btnAnterior.setOnClickListener(v -> {
+            if (indiceActual > 0) {
+                indiceActual--;
+                mostrarMarca(indiceActual);
+            }
+        });
+
+        btnSiguiente.setOnClickListener(v -> {
+            if (listaMarcas != null && indiceActual < listaMarcas.size() - 1) {
+                indiceActual++;
+                mostrarMarca(indiceActual);
+            }
+        });
+
+        imageMarca.setOnClickListener(v -> {
+            if (!listaMarcas.isEmpty()) {
+                Marca marcaSeleccionada = listaMarcas.get(indiceActual);
+                Intent intent = new Intent(MainActivity.this, CocheActivity.class);
+                intent.putExtra("marcaId", marcaSeleccionada.getId());
+                intent.putExtra("marcaNombre", marcaSeleccionada.getNombre());
+                startActivity(intent);
             }
         });
     }
 
-    private void updateImage() {
-        imageView.setImageResource(imagenes[currentIndex]);
+    private void mostrarMarca(int indice) {
+        Marca marca = listaMarcas.get(indice);
+        Picasso.get()
+                .load(marca.getImagen())
+                .placeholder(R.drawable.imagen_predeterminada)
+                .error(R.drawable.imagen_predeterminada)
+                .into(imageMarca);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("indice_actual", indiceActual);
     }
 }

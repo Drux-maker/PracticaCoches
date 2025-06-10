@@ -2,4 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="luxuryBlack">#121212</color>
+    <color name="luxuryGold">#D4AF37</color>
+    <color name="luxuryGray">#2C2C2C</color>
+    <color name="luxuryWhite">#F5F5F5</color>
+    <color name="rippleLight">#33FFFFFF</color>
+    <color name="luxuryGoldDark">#A8892A</color>
 </resources>

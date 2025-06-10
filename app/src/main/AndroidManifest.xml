@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.practicacoches">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PracticaCoches"
         tools:targetApi="31">
@@ -22,24 +22,13 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".MainActivity"
-            android:exported="false"
-            android:theme="@style/Theme.PracticaCoches"
-            android:screenOrientation="portrait" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".CompraActivity" />
+        <activity android:name=".CocheActivity" />
+        <activity android:name=".PiezasActivity" />
+        <activity android:name=".ListaCochesActivity" />
 
-        <activity
-            android:name=".CocheActivity"
-            android:exported="false"
-            android:theme="@style/Theme.PracticaCoches"
-            android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
-        <activity android:name=".CompraActivity"
-            android:label="Lista de Coches"/>
+
 
     </application>
 
