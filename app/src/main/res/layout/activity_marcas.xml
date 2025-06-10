@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layoutMarcas"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/luxuryBlack">
+
+    <!-- Título en tarjeta -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/luxuryGray"
+        app:cardCornerRadius="12dp"
+        android:elevation="6dp">
+
+        <TextView
+            android:id="@+id/tvTituloMarcas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Selecciona una marca"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/luxuryGold"
+            android:gravity="center"
+            android:padding="16dp" />
+    </androidx.cardview.widget.CardView>
+
+    <!-- Lista de marcas -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewMarcas"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:padding="4dp"
+        android:scrollbars="vertical"
+        android:background="@color/luxuryGray"/>
+</LinearLayout>

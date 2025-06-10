@@ -1,7 +1,45 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.PracticaCoches" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    <!-- Tema principal de la app -->
+    <style name="Theme.PracticaCoches" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Paleta de colores de lujo -->
+        <item name="colorPrimary">#1C1C1E</item>        <!-- grafito -->
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimaryContainer">#2C2C2E</item>
+
+        <item name="colorSecondary">#CDAF63</item>     <!-- dorado -->
+        <item name="colorOnSecondary">#1C1C1E</item>
+
+        <item name="colorSurface">#FFFFFF</item>
+        <item name="colorOnSurface">#000000</item>
+
+        <!-- Fondos -->
+        <item name="android:windowBackground">?android:colorBackground</item>
+
+        <!-- Estilos -->
+        <item name="buttonStyle">@style/CustomButton</item>
+        <item name="textInputStyle">@style/CustomTextInput</item>
+    </style>
+
+    <!-- Estilo personalizado de botón -->
+    <style name="CustomButton" parent="Widget.Material3.Button">
+        <item name="backgroundTint">#CDAF63</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="shapeAppearanceOverlay">@style/RoundedButton</item>
+    </style>
+
+    <!-- Esquinas redondeadas (usando shapeAppearanceOverlay) -->
+    <style name="RoundedButton" parent="">
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <!-- TextInput estilizado -->
+    <style name="CustomTextInput" parent="Widget.Material3.TextInputLayout.FilledBox">
+        <item name="boxBackgroundColor">#2C2C2E</item>
+        <item name="hintTextAppearance">@style/HintTextStyle</item>
+    </style>
+
+    <!-- Apariencia del hint -->
+    <style name="HintTextStyle" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:textColor">#AAAAAA</item>
     </style>
 </resources>

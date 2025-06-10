@@ -5,31 +5,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center">
+    android:background="@color/luxuryBlack"
+    android:gravity="center"
+    android:padding="24dp"
+    android:baselineAligned="false">
 
+    <!-- Imagen central -->
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:scaleType="fitCenter" />
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:layout_marginBottom="32dp"
+        android:scaleType="fitCenter"
+        android:contentDescription="Logo de la marca"
+        android:backgroundTint="@color/luxuryGold" />
 
+    <!-- Navegación -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center">
 
         <ImageButton
             android:id="@+id/btn_back"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            app:srcCompat="@drawable/back_arrow"
-            android:contentDescription="Botón imagen anterior"/>
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:background="@drawable/rounded_button_gold"
+            android:src="@drawable/back_arrow"
+            android:contentDescription="Marca anterior"
+            android:layout_marginEnd="24dp"
+            app:tint="@android:color/white" />
 
         <ImageButton
             android:id="@+id/btn_forward"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            app:srcCompat="@drawable/forward_arrow"
-            android:contentDescription="Botón imagen siguiente" />
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:background="@drawable/rounded_button_gold"
+            android:src="@drawable/forward_arrow"
+            android:contentDescription="Marca siguiente"
+            app:tint="@android:color/white" />
     </LinearLayout>
 </LinearLayout>

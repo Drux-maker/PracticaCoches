@@ -3,61 +3,120 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/luxuryBlack"
+    android:padding="16dp">
 
-    <!-- Barra superior con botones -->
+    <!-- Barra superior -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="64dp"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:gravity="center_vertical"
+        android:weightSum="6">
 
         <ImageButton
             android:id="@+id/btnVolver"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:padding="12dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:src="@drawable/back_arrow"
-            android:contentDescription="Botón Volver"/>
+            android:contentDescription="Volver"
+            app:tint="@color/luxuryGold" />
 
         <ImageButton
             android:id="@+id/btnDollar"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:padding="12dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_dollar"
-            android:contentDescription="Botón Dólar"/>
+            android:contentDescription="Lista de coches"
+            app:tint="@color/luxuryGold" />
 
         <TextView
             android:id="@+id/tvMarca"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:text="Marca"
+            android:textColor="@color/luxuryWhite"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:gravity="center" />
+
+        <ImageButton
+            android:id="@+id/btnConfiguracion"
+            android:layout_width="0dp"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text=""
-            android:textSize="30sp"
-            android:textStyle="bold" />
-
-        <ImageButton
-            android:id="@+id/btnSettings"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_height="match_parent"
+            android:padding="12dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_configuracion"
-            android:contentDescription="Botón Configuración"/>
+            android:contentDescription="Comprar piezas"
+            app:tint="@color/luxuryGold" />
 
         <ImageButton
-            android:id="@+id/btnUpgrade"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:id="@+id/btnMejora"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:padding="12dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_mejora"
-            android:contentDescription="Botón Mejora"/>
+            android:contentDescription="Mejorar coche"
+            app:tint="@color/luxuryGold" />
     </LinearLayout>
 
-    <!-- Imagen coche -->
+    <!-- Línea dorada decorativa -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="12dp"
+        android:background="@color/luxuryGold" />
+
+    <!-- Imagen del coche -->
     <ImageView
         android:id="@+id/imgCoche"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:scaleType="centerInside"
-        android:src="@drawable/audi_a3_8p"/>
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Dinero y Nivel -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:id="@+id/tvDinero"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Dinero: 5000€"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/luxuryGold" />
+
+        <TextView
+            android:id="@+id/tvNivel"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Nivel: 1"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/luxuryWhite"
+            android:gravity="end" />
+    </LinearLayout>
 
 </LinearLayout>
