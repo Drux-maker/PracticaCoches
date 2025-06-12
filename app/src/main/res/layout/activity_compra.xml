@@ -12,7 +12,7 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabMode="fixed"
+        app:tabMode="scrollable"
         app:tabGravity="fill"
         android:background="@color/luxuryBlack"
         app:tabIndicatorColor="@color/luxuryGold"/>
@@ -45,7 +45,7 @@
         android:id="@+id/btnGuardar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Guardar selección"
+        android:text="Comprar Piezas"
         android:textAllCaps="false"
         android:textColor="@color/luxuryWhite"
         android:backgroundTint="@color/luxuryGold"

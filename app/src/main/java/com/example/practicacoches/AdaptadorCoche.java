@@ -14,10 +14,17 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class AdaptadorCoche extends RecyclerView.Adapter<AdaptadorCoche.CocheViewHolder> {
-    private List<Coche> coches;
 
-    public AdaptadorCoche(List<Coche> coches) {
+    public interface OnCocheClickListener {
+        void onCocheClick(Coche coche);
+    }
+
+    private List<Coche> coches;
+    private OnCocheClickListener listener;
+
+    public AdaptadorCoche(List<Coche> coches, OnCocheClickListener listener) {
         this.coches = coches;
+        this.listener = listener;
     }
 
     @NonNull
@@ -43,6 +50,12 @@ public class AdaptadorCoche extends RecyclerView.Adapter<AdaptadorCoche.CocheVie
         }
 
         holder.tvModelo.setText(coche.getNombre());
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onCocheClick(coche);
+            }
+        });
     }
 
     @Override

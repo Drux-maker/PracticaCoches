@@ -1,9 +1,11 @@
 package com.example.practicacoches;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -16,6 +18,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private ImageView imageMarca;
+    private TextView tvMarcaNombre;
     private ImageButton btnAnterior, btnSiguiente;
     private List<Marca> listaMarcas = new ArrayList<>();
     private int indiceActual = 0;
@@ -26,7 +29,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        SharedPreferences prefs = getSharedPreferences("MisDatos", MODE_PRIVATE);
+
+        if (!prefs.contains("dinero")) {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putLong("dinero", Double.doubleToLongBits(5000));
+            editor.apply();
+        }
+
         imageMarca = findViewById(R.id.imageView);
+        tvMarcaNombre = findViewById(R.id.tvMarcaNombre);
         btnAnterior = findViewById(R.id.btn_back);
         btnSiguiente = findViewById(R.id.btn_forward);
 
@@ -79,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
                 .placeholder(R.drawable.imagen_predeterminada)
                 .error(R.drawable.imagen_predeterminada)
                 .into(imageMarca);
+
+        tvMarcaNombre.setText(marca.getNombre());
     }
 
     @Override

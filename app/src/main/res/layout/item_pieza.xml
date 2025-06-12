@@ -78,21 +78,6 @@
                 android:contentDescription="Favorito"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:layout_marginTop="8dp"/>
-
-            <Button
-                android:id="@+id/btnVender"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Vender"
-                android:visibility="gone"
-                android:textSize="12sp"
-                android:textColor="@android:color/white"
-                android:backgroundTint="@color/luxuryGold"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:padding="6dp"
-                android:layout_marginTop="8dp"
-                style="@style/Widget.MaterialComponents.Button.TextButton" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

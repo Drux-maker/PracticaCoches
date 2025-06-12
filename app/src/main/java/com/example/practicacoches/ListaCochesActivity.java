@@ -1,5 +1,6 @@
 package com.example.practicacoches;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +14,6 @@ import java.util.List;
 public class ListaCochesActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private AdaptadorCoche adaptador;
     private MainViewModel mvm;
     private String marcaNombre;
 
@@ -37,7 +37,14 @@ public class ListaCochesActivity extends AppCompatActivity {
                         cochesFiltrados.add(coche);
                     }
                 }
-                adaptador = new AdaptadorCoche(cochesFiltrados);
+
+                AdaptadorCoche adaptador = new AdaptadorCoche(cochesFiltrados, cocheSeleccionado -> {
+                    // Al hacer clic, abrir CocheActivity con el coche
+                    Intent intent = new Intent(ListaCochesActivity.this, CocheActivity.class);
+                    intent.putExtra("cocheSeleccionado", cocheSeleccionado);
+                    startActivity(intent);
+                });
+
                 recyclerView.setAdapter(adaptador);
             }
         });
