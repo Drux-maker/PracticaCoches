@@ -2,15 +2,14 @@ package com.example.practicacoches;
 
 import java.io.Serializable;
 
-public class Pieza {
+public class Pieza implements Serializable {
     private String id;
     private String nombre;
     private double precio;
     private String imagenUrl;
-    private String categoria;  // Nueva propiedad
+    private String categoria;
     private boolean favorito;
 
-    // Constructor
     public Pieza(String id, String nombre, double precio, String imagenUrl, String categoria) {
         this.id = id;
         this.nombre = nombre;
@@ -19,7 +18,6 @@ public class Pieza {
         this.categoria = categoria;
     }
 
-    // Getters y Setters
     public String getCategoria() {
         return categoria;
     }
@@ -59,11 +57,12 @@ public class Pieza {
     public void setImagenUrl(String imagenUrl) {
         this.imagenUrl = imagenUrl;
     }
+
     public boolean isFavorito() {
         return favorito;
     }
+
     public void setFavorito(boolean favorito) {
         this.favorito = favorito;
     }
 }
-

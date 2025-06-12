@@ -10,6 +10,18 @@
     android:padding="24dp"
     android:baselineAligned="false">
 
+    <!-- Título de la marca -->
+    <TextView
+        android:id="@+id/tvMarcaNombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombre de la Marca"
+        android:textSize="30sp"
+        android:textColor="@color/luxuryGold"
+        android:layout_marginBottom="16dp"
+        android:textStyle="bold"
+        android:gravity="center" />
+
     <!-- Imagen central -->
     <ImageView
         android:id="@+id/imageView"
@@ -25,7 +37,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_marginTop="32dp">
 
         <ImageButton
             android:id="@+id/btn_back"
@@ -34,8 +47,8 @@
             android:background="@drawable/rounded_button_gold"
             android:src="@drawable/back_arrow"
             android:contentDescription="Marca anterior"
-            android:layout_marginEnd="24dp"
-            app:tint="@android:color/white" />
+            android:layout_marginEnd="32dp"
+        app:tint="@android:color/white" />
 
         <ImageButton
             android:id="@+id/btn_forward"

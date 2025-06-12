@@ -14,10 +14,11 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabMode="fixed"
+        app:tabMode="scrollable"
         app:tabGravity="fill"
         android:background="@color/luxuryBlack"
-        app:tabIndicatorColor="@color/luxuryGold"/>
+        app:tabIndicatorColor="@color/luxuryGold"
+        />
 
     <!-- Título -->
     <TextView
@@ -58,7 +59,21 @@
         android:id="@+id/btnGuardar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Guardar selección"
+        android:text="Equipar Piezas"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:textColor="@color/luxuryBlack"
+        android:backgroundTint="@color/luxuryGold"
+        android:layout_marginTop="16dp"
+        android:padding="12dp"
+        style="@style/Widget.MaterialComponents.Button" />
+
+    <!-- Botón vender -->
+    <Button
+        android:id="@+id/btnVender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Vender Piezas"
         android:textAllCaps="false"
         android:textStyle="bold"
         android:textColor="@color/luxuryBlack"

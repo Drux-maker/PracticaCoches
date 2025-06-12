@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -41,12 +42,12 @@
             android:id="@+id/tvMarca"
             android:layout_width="0dp"
             android:layout_weight="2"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
             android:text="Marca"
             android:textColor="@color/luxuryWhite"
             android:textStyle="bold"
-            android:textSize="24sp"
-            android:gravity="center" />
+            android:textSize="20sp" />
 
         <ImageButton
             android:id="@+id/btnConfiguracion"
@@ -71,7 +72,7 @@
             app:tint="@color/luxuryGold" />
     </LinearLayout>
 
-    <!-- Línea dorada decorativa -->
+    <!-- Línea decorativa -->
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
@@ -79,23 +80,44 @@
         android:layout_marginBottom="12dp"
         android:background="@color/luxuryGold" />
 
-    <!-- Imagen del coche -->
+    <!-- Video del coche -->
+    <FrameLayout
+        android:id="@+id/videoContainer"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp">
+
+        <VideoView
+            android:id="@+id/videoCoche"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+
+    <!-- Imagen del coche centrada -->
     <ImageView
         android:id="@+id/imgCoche"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:scaleType="fitCenter"
-        android:adjustViewBounds="true"
-        android:layout_marginBottom="16dp" />
+        android:layout_height="250dp"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="Imagen del coche" />
 
-    <!-- Dinero y Nivel -->
+    <!-- Separador flexible (espaciador) para empujar el dinero/nivel abajo -->
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- Dinero y nivel abajo -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginBottom="8dp">
+        android:layout_marginTop="16dp">
 
         <TextView
             android:id="@+id/tvDinero"

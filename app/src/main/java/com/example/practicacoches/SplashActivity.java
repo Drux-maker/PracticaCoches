@@ -1,6 +1,8 @@
 package com.example.practicacoches;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,6 +49,7 @@ public class SplashActivity extends AppCompatActivity {
                 revisarCargaCompleta();
             }
         });
+
 
         mvm.cargarMarcas(this);
         mvm.cargarCoches(this);

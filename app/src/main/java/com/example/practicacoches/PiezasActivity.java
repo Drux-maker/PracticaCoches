@@ -4,13 +4,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.tabs.TabLayout;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +22,14 @@ public class PiezasActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private AdaptadorPieza adaptador;
-    private ArrayList<Pieza> piezasCompradas;
+    private ArrayList<Pieza> piezasCompradas = new ArrayList<>();
+    private ArrayList<Pieza> piezasEquipadas = new ArrayList<>();
+    private boolean mostrarPiezasEquipadas = false;
+    private Button btnGuardar;
+    private Button btnVender;
+    private TextView tvDinero;
+
+    private TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,66 +37,133 @@ public class PiezasActivity extends AppCompatActivity {
         setContentView(R.layout.activity_piezas);
 
         recyclerView = findViewById(R.id.rvPiezas);
-        TabLayout tabLayout = findViewById(R.id.tabLayout);
+        btnGuardar = findViewById(R.id.btnGuardar);
+        btnVender = findViewById(R.id.btnVender);
+        tabLayout = findViewById(R.id.tabLayout);
+        tvDinero = findViewById(R.id.tvDinero);
+
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        mostrarDialogoSeleccion();  // Espera la selección del usuario
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        actualizarDinero();
+    }
+
+
+    private void mostrarDialogoSeleccion() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Selecciona las piezas a ver")
+                .setMessage("¿Quieres ver las piezas compradas o las piezas equipadas?")
+                .setPositiveButton("Piezas Compradas", (dialog, id) -> {
+                    cargarPiezasCompradas();
+                    mostrarPiezasEquipadas = false;
+                    btnGuardar.setText("Equipar Piezas");
+                    configurarFiltrosYEventos();
+                })
+                .setNegativeButton("Piezas Equipadas", (dialog, id) -> {
+                    cargarPiezasEquipadas();
+                    mostrarPiezasEquipadas = true;
+                    btnGuardar.setText("Desequipar Piezas");
+                    configurarFiltrosYEventos();
+                })
+                .create()
+                .show();
+    }
+
+    private void cargarPiezasCompradas() {
         SharedPreferences prefs = getSharedPreferences("MisDatos", MODE_PRIVATE);
         String piezasJson = prefs.getString("piezas_guardadas", null);
-        if (piezasJson != null) {
-            piezasCompradas = SerializadorPiezas.deserializar(piezasJson);
-        } else {
-            piezasCompradas = new ArrayList<>();
-        }
-
-        adaptador = new AdaptadorPieza(piezasCompradas, true);
+        piezasCompradas = (piezasJson != null) ? SerializadorPiezas.deserializar(piezasJson) : new ArrayList<>();
+        adaptador = new AdaptadorPieza(piezasCompradas);
         recyclerView.setAdapter(adaptador);
+    }
 
-        // Añadir las categorías al TabLayout
+    private void cargarPiezasEquipadas() {
+        SharedPreferences prefs = getSharedPreferences("MisDatos", MODE_PRIVATE);
+        String piezasJson = prefs.getString("piezas_equipadas", null);
+        piezasEquipadas = (piezasJson != null) ? SerializadorPiezas.deserializar(piezasJson) : new ArrayList<>();
+        adaptador = new AdaptadorPieza(piezasEquipadas);
+        recyclerView.setAdapter(adaptador);
+    }
+
+    private void configurarFiltrosYEventos() {
+        tabLayout.removeAllTabs();
+        tabLayout.addTab(tabLayout.newTab().setText("Todos"));
         tabLayout.addTab(tabLayout.newTab().setText("Pieza"));
         tabLayout.addTab(tabLayout.newTab().setText("Carrocería"));
         tabLayout.addTab(tabLayout.newTab().setText("Interior"));
         tabLayout.addTab(tabLayout.newTab().setText("Favoritos"));
 
-        // Filtrado según la categoría seleccionada
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 String categoriaSeleccionada = tab.getText().toString();
-                List<Pieza> piezasFiltradas = filtrarPorCategoria(piezasCompradas, categoriaSeleccionada);
+                List<Pieza> listaActual = mostrarPiezasEquipadas ? piezasEquipadas : piezasCompradas;
+                List<Pieza> piezasFiltradas = filtrarPorCategoria(listaActual, categoriaSeleccionada);
                 adaptador.actualizarPiezas(piezasFiltradas);
             }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-                // No hacer nada cuando la pestaña no esté seleccionada
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-                // No hacer nada cuando la pestaña ya esté seleccionada
-            }
+            @Override public void onTabUnselected(TabLayout.Tab tab) {}
+            @Override public void onTabReselected(TabLayout.Tab tab) {}
         });
 
-        Button btnGuardar = findViewById(R.id.btnGuardar);
         btnGuardar.setOnClickListener(v -> {
             ArrayList<Pieza> seleccionadas = adaptador.getPiezasSeleccionadas();
+
+            if (mostrarPiezasEquipadas) {
+                piezasEquipadas.removeAll(seleccionadas);
+                piezasCompradas.addAll(seleccionadas);
+                btnGuardar.setText("Equipar Piezas");
+            } else {
+                piezasCompradas.removeAll(seleccionadas);
+                piezasEquipadas.addAll(seleccionadas);
+                btnGuardar.setText("Desequipar Piezas");
+            }
+
+            SharedPreferences prefs = getSharedPreferences("MisDatos", MODE_PRIVATE);
+            prefs.edit().putString("piezas_guardadas", SerializadorPiezas.serializar(piezasCompradas)).apply();
+            prefs.edit().putString("piezas_equipadas", SerializadorPiezas.serializar(piezasEquipadas)).apply();
+
+            int nuevoNivel = calcularNivel(mostrarPiezasEquipadas ? piezasEquipadas : piezasCompradas);
+            prefs.edit().putInt("nivelCoche", nuevoNivel).apply();
+
+            adaptador.actualizarPiezas(mostrarPiezasEquipadas ? piezasEquipadas : piezasCompradas);
+            Toast.makeText(PiezasActivity.this, "Piezas actualizadas", Toast.LENGTH_SHORT).show();
+
+            finish();
+        });
+
+        btnVender.setOnClickListener(v -> {
+            ArrayList<Pieza> seleccionadas = adaptador.getPiezasSeleccionadas();
+
+            if (mostrarPiezasEquipadas) {
+                piezasEquipadas.removeAll(seleccionadas);
+            } else {
+                piezasCompradas.removeAll(seleccionadas);
+            }
+
+            SharedPreferences prefs = getSharedPreferences("MisDatos", MODE_PRIVATE);
+            prefs.edit().putString("piezas_guardadas", SerializadorPiezas.serializar(piezasCompradas)).apply();
+            prefs.edit().putString("piezas_equipadas", SerializadorPiezas.serializar(piezasEquipadas)).apply();
 
             double totalVenta = 0;
             for (Pieza pieza : seleccionadas) {
                 totalVenta += pieza.getPrecio();
             }
 
-            double dineroActual = Double.longBitsToDouble(prefs.getLong("dinero", Double.doubleToLongBits(10000)));
+            double dineroActual = Double.longBitsToDouble(prefs.getLong("dinero", Double.doubleToLongBits(5000)));
             dineroActual += totalVenta;
             prefs.edit().putLong("dinero", Double.doubleToLongBits(dineroActual)).apply();
 
-            piezasCompradas.removeAll(seleccionadas);
-            prefs.edit().putString("piezas_guardadas", SerializadorPiezas.serializar(piezasCompradas)).apply();
-
-            int nuevoNivel = calcularNivel(piezasCompradas);
+            int nuevoNivel = calcularNivel(mostrarPiezasEquipadas ? piezasEquipadas : piezasCompradas);
             prefs.edit().putInt("nivelCoche", nuevoNivel).apply();
 
+            Toast.makeText(PiezasActivity.this, "Piezas vendidas. Dinero actualizado.", Toast.LENGTH_SHORT).show();
             finish();
         });
     }
@@ -93,7 +171,7 @@ public class PiezasActivity extends AppCompatActivity {
     private List<Pieza> filtrarPorCategoria(List<Pieza> listaPiezas, String categoria) {
         List<Pieza> piezasFiltradas = new ArrayList<>();
         for (Pieza pieza : listaPiezas) {
-            if (pieza.getCategoria().equalsIgnoreCase(categoria)) {
+            if (categoria.equalsIgnoreCase("Todos") || pieza.getCategoria().equalsIgnoreCase(categoria)) {
                 piezasFiltradas.add(pieza);
             } else if (categoria.equalsIgnoreCase("Favoritos") && pieza.isFavorito()) {
                 piezasFiltradas.add(pieza);
@@ -117,4 +195,11 @@ public class PiezasActivity extends AppCompatActivity {
         else if (totalPrecio >= 500) return 2;
         else return 1;
     }
+    private void actualizarDinero() {
+        SharedPreferences prefs = getSharedPreferences("MisDatos", MODE_PRIVATE);
+        double dinero = Double.longBitsToDouble(prefs.getLong("dinero", Double.doubleToLongBits(5000)));
+        DecimalFormat formato = new DecimalFormat("#.##");
+        tvDinero.setText("Dinero: " + formato.format(dinero) + "€");
+    }
+
 }

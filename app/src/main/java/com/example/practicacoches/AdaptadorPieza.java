@@ -1,5 +1,7 @@
 package com.example.practicacoches;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,29 +26,25 @@ public class AdaptadorPieza extends RecyclerView.Adapter<AdaptadorPieza.ViewHold
 
     private List<Pieza> lista;
     private Set<Integer> seleccionadas = new HashSet<>();
-    private boolean mostrarBotonVenta;
 
-    // Constructor con el nuevo parámetro
-    public AdaptadorPieza(List<Pieza> lista, boolean mostrarBotonVenta) {
+    public AdaptadorPieza(List<Pieza> lista) {
         this.lista = lista;
-        this.mostrarBotonVenta = mostrarBotonVenta;
     }
+
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvNombre, tvPrecio;
         ImageView imgPieza;
         CheckBox cbSeleccionada;
-        Button btnVender;  // El botón "Vender"
-        ImageButton btnFavorito;  // El botón de "Favorito"
+        Button btnVender;
+        ImageButton btnFavorito;
 
-        // Constructor de ViewHolder
         ViewHolder(View itemView) {
             super(itemView);
             tvNombre = itemView.findViewById(R.id.tvNombre);
             tvPrecio = itemView.findViewById(R.id.tvPrecio);
             imgPieza = itemView.findViewById(R.id.imgPieza);
             cbSeleccionada = itemView.findViewById(R.id.cbSeleccionada);
-            btnVender = itemView.findViewById(R.id.btnVender);
-            btnFavorito = itemView.findViewById(R.id.btnFavorito);  // Inicializamos el botón "Favorito"
+            btnFavorito = itemView.findViewById(R.id.btnFavorito);
         }
     }
 
@@ -89,7 +87,6 @@ public class AdaptadorPieza extends RecyclerView.Adapter<AdaptadorPieza.ViewHold
         holder.tvNombre.setText(pieza.getNombre());
         holder.tvPrecio.setText(pieza.getPrecio() + "€");
 
-        // Cargar imagen de la pieza
         String imagenUrl = pieza.getImagenUrl();
         if (imagenUrl == null || imagenUrl.isEmpty()) {
             holder.imgPieza.setImageResource(R.drawable.imagen_predeterminada);
@@ -101,41 +98,26 @@ public class AdaptadorPieza extends RecyclerView.Adapter<AdaptadorPieza.ViewHold
                     .into(holder.imgPieza);
         }
 
-        // Establecer el ícono del botón de favorito según el estado
         if (pieza.isFavorito()) {
-            holder.btnFavorito.setImageResource(R.drawable.ic_star); // Ícono de estrella llena si es favorito
+            holder.btnFavorito.setImageResource(R.drawable.ic_star);
         } else {
-            holder.btnFavorito.setImageResource(R.drawable.ic_star_outline); // Ícono de estrella vacía si no es favorito
+            holder.btnFavorito.setImageResource(R.drawable.ic_star_outline);
         }
 
-        // Establecer el evento del botón de favorito
         holder.btnFavorito.setOnClickListener(v -> {
-            // Cambiar el estado de favorito
             boolean nuevoEstado = !pieza.isFavorito();
             pieza.setFavorito(nuevoEstado);
 
-            // Actualizar el ícono del botón de favorito
             if (nuevoEstado) {
                 holder.btnFavorito.setImageResource(R.drawable.ic_star);
             } else {
                 holder.btnFavorito.setImageResource(R.drawable.ic_star_outline);
             }
 
-            // Si se quiere, podemos actualizar las piezas en el RecyclerView
             notifyItemChanged(position);
-
-            // O también podemos hacer algo adicional, como guardar el estado de favoritos en el SharedPreferences
         });
 
-        // Mostrar u ocultar el botón "Vender"
-        if (mostrarBotonVenta) {
-            holder.btnVender.setVisibility(View.VISIBLE);
-        } else {
-            holder.btnVender.setVisibility(View.GONE);
-        }
-
-        // Checkbox de selección
-        holder.cbSeleccionada.setOnCheckedChangeListener(null); // evita listeners duplicados
+        holder.cbSeleccionada.setOnCheckedChangeListener(null);
         holder.cbSeleccionada.setChecked(seleccionadas.contains(position));
 
         holder.cbSeleccionada.setOnCheckedChangeListener((buttonView, isChecked) -> {
